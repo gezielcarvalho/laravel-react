@@ -1,6 +1,6 @@
 /**
- * Jest Playground - Test various Jest features and patterns
- * This file is for experimentation and learning Jest testing patterns
+ * Tests for playground.ts functions
+ * This file tests all the experimental functions and utilities in playground.ts
  */
 
 // Import your playground functions to test them
@@ -14,191 +14,6 @@ import {
   validators,
   ValidationError,
 } from "../playground";
-
-describe("Jest Playground", () => {
-  // Basic test structure
-  it("should demonstrate basic Jest assertions", () => {
-    const message = "Hello Jest!";
-    expect(message).toBe("Hello Jest!");
-    expect(message).toContain("Jest");
-    expect(message.length).toBeGreaterThan(5);
-  });
-
-  // Testing objects and arrays
-  it("should test objects and arrays", () => {
-    const user = { id: 1, name: "John", email: "john@test.com" };
-    expect(user).toEqual({ id: 1, name: "John", email: "john@test.com" });
-    expect(user).toHaveProperty("email");
-
-    const numbers = [1, 2, 3, 4, 5];
-    expect(numbers).toHaveLength(5);
-    expect(numbers).toContain(3);
-  });
-
-  // Testing async functions
-  it("should test async operations", async () => {
-    const asyncFunction = () => Promise.resolve("async result");
-    const result = await asyncFunction();
-    expect(result).toBe("async result");
-  });
-
-  // Testing with mock functions
-  it("should demonstrate mock functions", () => {
-    const mockFn = jest.fn();
-    mockFn("test argument");
-
-    expect(mockFn).toHaveBeenCalled();
-    expect(mockFn).toHaveBeenCalledWith("test argument");
-    expect(mockFn).toHaveBeenCalledTimes(1);
-  });
-
-  // Testing with timers
-  it("should test timers", () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
-
-    setTimeout(callback, 1000);
-    jest.advanceTimersByTime(1000);
-
-    expect(callback).toHaveBeenCalled();
-    jest.useRealTimers();
-  });
-
-  // Testing error handling
-  it("should test error throwing", () => {
-    const throwError = () => {
-      throw new Error("Test error");
-    };
-
-    expect(throwError).toThrow("Test error");
-    expect(throwError).toThrow(Error);
-  });
-
-  // Group related tests
-  describe("Math operations", () => {
-    it("should add numbers correctly", () => {
-      expect(2 + 2).toBe(4);
-    });
-
-    it("should multiply numbers correctly", () => {
-      expect(3 * 4).toBe(12);
-    });
-  });
-
-  // Setup and teardown
-  describe("Setup and teardown example", () => {
-    let testData: any;
-
-    beforeEach(() => {
-      testData = { value: 0 };
-    });
-
-    afterEach(() => {
-      testData = null;
-    });
-
-    it("should have initial test data", () => {
-      expect(testData.value).toBe(0);
-    });
-
-    it("should be able to modify test data", () => {
-      testData.value = 42;
-      expect(testData.value).toBe(42);
-    });
-  });
-
-  // Skip tests when needed
-  it.skip("should skip this test", () => {
-    // This test will be skipped
-    expect(true).toBe(false);
-  });
-
-  // Focus on specific tests during development
-  // it.only('should only run this test', () => {
-  //   expect(true).toBe(true);
-  // });
-});
-
-// Testing TypeScript-specific features
-describe("TypeScript Features Playground", () => {
-  interface TestUser {
-    id: number;
-    name: string;
-    isActive: boolean;
-  }
-
-  it("should work with TypeScript interfaces", () => {
-    const user: TestUser = {
-      id: 1,
-      name: "Test User",
-      isActive: true,
-    };
-
-    expect(typeof user.id).toBe("number");
-    expect(typeof user.name).toBe("string");
-    expect(typeof user.isActive).toBe("boolean");
-  });
-
-  it("should test type assertions", () => {
-    const value: unknown = "hello world";
-    const stringValue = value as string;
-
-    expect(stringValue.toUpperCase()).toBe("HELLO WORLD");
-  });
-});
-
-// Utility functions for your playground
-const playgroundUtils = {
-  createMockUser: (overrides: Partial<{ id: number; name: string }> = {}) => ({
-    id: 1,
-    name: "Default User",
-    ...overrides,
-  }),
-
-  delay: (ms: number) => new Promise((resolve) => setTimeout(resolve, ms)),
-
-  randomNumber: (min: number, max: number) =>
-    Math.floor(Math.random() * (max - min + 1)) + min,
-};
-
-describe("Playground Utilities", () => {
-  it("should create mock users", () => {
-    const user = playgroundUtils.createMockUser({ name: "Custom User" });
-    expect(user.name).toBe("Custom User");
-    expect(user.id).toBe(1);
-  });
-
-  it("should generate random numbers", () => {
-    const num = playgroundUtils.randomNumber(1, 10);
-    expect(num).toBeGreaterThanOrEqual(1);
-    expect(num).toBeLessThanOrEqual(10);
-  });
-});
-
-/*
- * 🎯 PLAYGROUND TIPS:
- *
- * 1. Add your experimental tests above
- * 2. Use describe() to group related tests
- * 3. Use it.skip() to temporarily disable tests
- * 4. Use it.only() to focus on specific tests during development
- * 5. Test your TypeScript types and interfaces here
- * 6. Experiment with different Jest matchers and patterns
- *
- * 🚀 COMMON JEST MATCHERS:
- * - toBe() - exact equality
- * - toEqual() - deep equality
- * - toContain() - array/string contains value
- * - toHaveProperty() - object has property
- * - toThrow() - function throws error
- * - toHaveBeenCalled() - mock function was called
- * - toBeNull(), toBeUndefined(), toBeTruthy(), toBeFalsy()
- *
- * 📚 ASYNC TESTING:
- * - Use async/await with async functions
- * - Use resolves/rejects for promise testing
- * - Mock timers with jest.useFakeTimers()
- */
 
 // ================================
 // PLAYGROUND FUNCTION TESTS
@@ -251,6 +66,16 @@ describe("Playground Functions", () => {
       expect(mathUtils.isPrime(17)).toBe(true);
       expect(mathUtils.isPrime(4)).toBe(false);
       expect(mathUtils.isPrime(1)).toBe(false);
+    });
+
+    it("should calculate fibonacci numbers", () => {
+      expect(mathUtils.fibonacci(0)).toBe(0);
+      expect(mathUtils.fibonacci(1)).toBe(1);
+      expect(mathUtils.fibonacci(5)).toBe(5);
+      expect(mathUtils.fibonacci(10)).toBe(55);
+      expect(() => mathUtils.fibonacci(-1)).toThrow(
+        "Fibonacci of negative number is not defined"
+      );
     });
   });
 
@@ -364,6 +189,12 @@ describe("Playground Functions", () => {
       expect(validators.isStrongPassword("12345678")).toBe(false);
     });
 
+    it("should validate phone numbers", () => {
+      expect(validators.isPhoneNumber("+1234567890")).toBe(true);
+      expect(validators.isPhoneNumber("(555) 123-4567")).toBe(true);
+      expect(validators.isPhoneNumber("123")).toBe(false);
+    });
+
     it("should validate URLs", () => {
       expect(validators.isUrl("https://example.com")).toBe(true);
       expect(validators.isUrl("http://localhost:3000")).toBe(true);
@@ -392,6 +223,23 @@ describe("Playground Functions", () => {
       expect(users[0].name).toBe("User 1");
       expect(users[2].name).toBe("User 3");
     });
+
+    it("should create mock products", () => {
+      const product = dataGenerators.createProduct();
+      expect(product).toHaveProperty("id");
+      expect(product).toHaveProperty("name");
+      expect(product).toHaveProperty("price");
+      expect(product.inStock).toBe(true);
+    });
+
+    it("should create custom products", () => {
+      const product = dataGenerators.createProduct({
+        name: "Custom Product",
+        price: 199.99,
+      });
+      expect(product.name).toBe("Custom Product");
+      expect(product.price).toBe(199.99);
+    });
   });
 
   describe("Error classes", () => {
@@ -400,6 +248,24 @@ describe("Playground Functions", () => {
       expect(error.message).toBe("Invalid input");
       expect(error.field).toBe("email");
       expect(error.name).toBe("ValidationError");
+      expect(error).toBeInstanceOf(Error);
     });
   });
 });
+
+/*
+ * 🎯 PLAYGROUND TESTING TIPS:
+ *
+ * 1. Add tests for new functions you create in playground.ts
+ * 2. Test both happy path and edge cases
+ * 3. Use describe() to group related function tests
+ * 4. Test error conditions with expect().toThrow()
+ * 5. For async functions, use async/await pattern
+ * 6. Test TypeScript types and interfaces
+ *
+ * 🚀 ADDING NEW TESTS:
+ * 1. Add your function to playground.ts
+ * 2. Import it at the top of this file
+ * 3. Create a new describe() block or add to existing one
+ * 4. Write comprehensive tests for all scenarios
+ */
