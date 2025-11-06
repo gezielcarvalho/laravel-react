@@ -18,6 +18,16 @@ Before running this application, make sure you have the following installed:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) (version 14+ for frontend development)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+
+**Frontend Dependencies:**
+
+- React 18.0.0
+- React Router DOM 6.3.0
+- Axios for API requests
+- Bootstrap for styling
+- SweetAlert for notifications
 
 ## 🛠️ Installation & Setup
 
@@ -75,7 +85,7 @@ php artisan migrate
 exit
 ```
 
-### 5. Install Frontend Dependencies
+### 5. Set up Frontend Application
 
 ```bash
 # Navigate to frontend directory
@@ -84,9 +94,22 @@ cd front
 # Install dependencies
 npm install
 
-# Start the React development server
+# Start the React development server (runs on port 3000)
 npm start
 ```
+
+**Frontend Setup Notes:**
+
+- The React app will automatically open in your browser at http://localhost:3000
+- The development server supports hot reloading (changes appear instantly)
+- Make sure the Laravel API is running before starting the frontend
+- The frontend is configured to connect to the API at http://localhost:8000
+
+**If you encounter issues:**
+
+- Ensure Node.js (version 14+) is installed
+- Clear npm cache: `npm cache clean --force`
+- Delete node_modules and reinstall: `rm -rf node_modules && npm install`
 
 ## 🌐 Access the Application
 
@@ -180,9 +203,13 @@ php artisan cache:clear
 ### Frontend (React)
 
 ```bash
+# Navigate to frontend directory
 cd front
 
-# Start development server
+# Install dependencies (first time setup)
+npm install
+
+# Start development server (http://localhost:3000)
 npm start
 
 # Build for production
@@ -190,7 +217,21 @@ npm run build
 
 # Run tests
 npm test
+
+# Check for dependency updates
+npm outdated
+
+# Update dependencies
+npm update
 ```
+
+**Frontend Development Tips:**
+
+- The app runs on http://localhost:3000 with hot reloading
+- API calls are made to http://localhost:8000 (ensure backend is running)
+- Uses React Router for navigation between pages
+- Bootstrap is included for styling
+- SweetAlert2 is used for user notifications
 
 ### Docker Management
 
@@ -227,8 +268,17 @@ docker compose logs api
    - Check file permissions in `api/storage` and `api/bootstrap/cache`
 
 4. **Frontend not connecting to API**:
+
    - Verify API is running on http://localhost:8000
    - Check CORS configuration in Laravel
+   - Ensure both frontend and backend are running
+
+5. **Frontend Issues**:
+   - **npm install fails**: Clear cache with `npm cache clean --force`
+   - **Port 3000 in use**: Kill process or change port in package.json
+   - **Module not found**: Delete `node_modules` and run `npm install` again
+   - **API requests failing**: Check network tab in browser dev tools
+   - **React app won't start**: Check Node.js version (requires 14+)
 
 ### Reset Everything:
 
